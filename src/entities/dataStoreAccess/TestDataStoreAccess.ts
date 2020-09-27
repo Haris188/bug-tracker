@@ -1,10 +1,33 @@
 
 import DataStoreAccess from './DataStoreAccess'
 import DataStoreResponse from './DataStoreResponse'
+import {filter} from 'lodash'
 
 class TestDataStoreAccess implements DataStoreAccess{
     ref:any
-    dataStore = {}
+    dataStore = {
+        accounts: [
+            {
+                id: 1,
+                email: 'haris@gmail.com',
+                password: 'anypass',
+                role: 'developer'
+            },
+            {
+                id: 2,
+                email: 'ahmad@gmail.com',
+                password: 'anypass',
+                role: 'developer'
+            }
+        ],
+        developers: [
+            {
+                id: 1,
+                softwareDone:1
+            }
+        ]
+
+    }
 
     async write(data:any){
         this.dataStore[this.ref]
@@ -19,14 +42,17 @@ class TestDataStoreAccess implements DataStoreAccess{
         : this.createRef(path)
     }
 
-    readWhere(argsObj:object){
-        return new Promise<DataStoreResponse>(resolve=>{
-            resolve({
-                data: {
-                    id:'234'
-                }
-            })
-        })
+    async readWhere(argsObj:object){
+        const refRecords = this
+        .dataStore[this.ref]
+
+        const foundRecord: Array<any> 
+        = filter(refRecords, argsObj)
+
+        return {
+            success:(foundRecord !== null),
+            data: foundRecord
+        }
     }
 
     private findRef(path:string){
@@ -35,7 +61,7 @@ class TestDataStoreAccess implements DataStoreAccess{
     }
 
     private setRef(path){
-        this.ref(path)
+        this.ref = path
         return {success:true,data:null}
     }
 

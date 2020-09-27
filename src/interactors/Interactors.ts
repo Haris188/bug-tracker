@@ -13,6 +13,14 @@ class Interactors {
         const res = await user.signUp()
         return res
     }
+
+    async loginWithEmailPassword(loginCred){
+        const user:any = await this
+        .userFactory
+        .retrieveWithEmailPassword(loginCred)
+
+        return await user.login()
+    }
 }
 
 export default Interactors

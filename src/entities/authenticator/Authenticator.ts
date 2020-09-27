@@ -1,10 +1,12 @@
 import DataStoreAccess from "../dataStoreAccess/DataStoreAccess"
 import DataStoreGetter from "../dataStoreAccess/DataStoreGetter"
+import TestAuthentication from '../authenticationLib/TestAuthentication'
 
 
 class Authenticator{
     signUpData:any
     dataStore:DataStoreAccess
+    authenticationLib = new TestAuthentication()
 
     async signUpAdmin(userData:any){
         this.signUpData = userData
@@ -86,6 +88,35 @@ class Authenticator{
         = this.createSuccessReportFrom(successData)
 
         return successReport
+    }
+
+    async signInAsAdmin(userData){
+        return await 
+        this.signIn(userData)
+    }
+
+    async signInAsDeveloper(userData){
+        return await 
+        this.signIn(userData)
+    }
+
+    async signInAsTester(userData){
+        return await 
+        this.signIn(userData)
+    }
+
+    async signInAsProjectManager(userData){
+        return await 
+        this.signIn(userData)
+    }
+
+    private async signIn(userData){
+        return await this
+        .authenticationLib
+        .signInWithEmailPassword(
+            userData.accountData.email,
+            userData.accountData.password
+        )
     }
 
     private initializeDataStore(){

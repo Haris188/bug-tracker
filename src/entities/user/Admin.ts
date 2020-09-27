@@ -1,6 +1,6 @@
 
 import User from './User'
-import Authenticator from '../authenticator/authenticator'
+import Authenticator from '../authenticator/Authenticator'
 
 class Admin implements User{
     userData:any
@@ -13,6 +13,12 @@ class Admin implements User{
         return await 
         new Authenticator()
         .signUpAdmin(this.userData)
+    }
+
+    async login(){
+        return await
+        new Authenticator()
+        .signInAsAdmin(this.userData)
     }
 }
 

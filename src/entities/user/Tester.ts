@@ -1,6 +1,6 @@
 
 import User from './User'
-import Authenticator from '../authenticator/authenticator'
+import Authenticator from '../authenticator/Authenticator'
 
 class Tester implements User{
     userData:any
@@ -13,6 +13,12 @@ class Tester implements User{
         return await 
         new Authenticator()
         .signUpTester(this.userData)
+    }
+
+    async login(){
+        return await
+        new Authenticator()
+        .signInAsTester(this.userData)
     }
 }
 

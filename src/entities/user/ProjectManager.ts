@@ -1,6 +1,6 @@
 
 import User from './User'
-import Authenticator from '../authenticator/authenticator'
+import Authenticator from '../authenticator/Authenticator'
 
 class ProjectManager implements User{
     userData:any
@@ -13,6 +13,12 @@ class ProjectManager implements User{
         return await
         new Authenticator()
         .signUpProjectManager(this.userData)
+    }
+
+    async login(){
+        return await
+        new Authenticator()
+        .signInAsProjectManager(this.userData)
     }
 }
 

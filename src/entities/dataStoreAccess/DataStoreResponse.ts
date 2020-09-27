@@ -1,5 +1,6 @@
 
 interface DataStoreResponse{
+    success:boolean
     data: any
 }
 
