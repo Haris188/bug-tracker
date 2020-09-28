@@ -1,6 +1,7 @@
 
 import Interactors from './interactors/Interactors'
 import DataStore from './entities/dataStoreAccess/TestDataStoreAccess'
+import UserFactory from './entities/UserFactory'
 
 // new Interactors().signUp({
 //     accountData:{
@@ -21,13 +22,13 @@ const dataStore = new DataStore()
 // dataStore.write({test2:'test'})
 // console.log(dataStore.dataStore)
 
-new Interactors().loginWithEmailPassword({
-    email: 'haris@gmail.com',
-    password: 'anypass'
-})
-.then(value=>{
-    console.log(value)
-})
+// new Interactors().loginWithEmailPassword({
+//     email: 'haris@gmail.com',
+//     password: 'anypass'
+// })
+// .then(value=>{
+//     console.log(value)
+// })
 
 // dataStore.setIfNotCreateRef('accounts')
 // .then(value=>{
@@ -38,3 +39,19 @@ new Interactors().loginWithEmailPassword({
 //         console.log(value)
 //     })
 // })
+
+// new UserFactory()
+// .retrieveWithUserId(5)
+// .then(value=>console.log(value.getRole()))
+
+// new Interactors().checkUserLogin(2)
+// .then(value=>{
+//     console.log(value)
+// })
+
+new Interactors()
+.removeUser({
+    deleterId:6,
+    deleteeId: 1
+})
+.then(value=>console.log(value))

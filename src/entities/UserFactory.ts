@@ -3,11 +3,12 @@ import Developer from "./user/Developer"
 import Tester from "./user/Tester"
 import ProjectManager from "./user/ProjectManager"
 import DataStoreGetter from "./dataStoreAccess/DataStoreGetter"
+import UserData from "./user/UserData"
 
 class UserFactory{
     userTypes:Array<string>
 
-    createUserFromData(userData:any){
+    createUserFromData(userData:UserData){
         const type = userData
         .accountData
         .role
@@ -32,14 +33,28 @@ class UserFactory{
 
     async retrieveWithEmailPassword(loginCred){
         const userDataResponse = await
-        this.getUserDataFromDataStore(loginCred)
+        this.getUserDataFromAccountsWith(loginCred)
 
         return this.createUserFromData({
-            accountData: userDataResponse.data[0]
+            accountData: userDataResponse.data[0],
+            userSpecificData: {}
         })
     }
 
-    async getUserDataFromDataStore(loginCred){
+
+    async retrieveWithUserId(userId){
+        const userDataResponse = await
+        this.getUserDataFromAccountsWith({
+            id: userId
+        })
+
+        return this.createUserFromData({
+            accountData: userDataResponse.data[0],
+            userSpecificData:{}
+        })
+    }
+
+    async getUserDataFromAccountsWith(loginCred){
         const dataStore = await 
         new DataStoreGetter()
         .getAccordingToEnv()

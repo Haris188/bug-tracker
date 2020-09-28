@@ -110,6 +110,12 @@ class Authenticator{
         this.signIn(userData)
     }
 
+    async checkIsLoggedInOfUserWithId(userId){
+        return await this
+        .authenticationLib
+        .checkIsLoggedInWithUserId(userId)
+    }
+
     private async signIn(userData){
         return await this
         .authenticationLib

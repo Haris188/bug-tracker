@@ -1,7 +1,11 @@
 
 import DataStoreAccess from './DataStoreAccess'
 import DataStoreResponse from './DataStoreResponse'
-import {filter} from 'lodash'
+import {
+    filter,
+    remove,
+    isMatch
+} from 'lodash'
 
 class TestDataStoreAccess implements DataStoreAccess{
     ref:any
@@ -18,6 +22,12 @@ class TestDataStoreAccess implements DataStoreAccess{
                 email: 'ahmad@gmail.com',
                 password: 'anypass',
                 role: 'developer'
+            },
+            {
+                id: 5,
+                email: 'ahmad@gmail.com',
+                password: 'anypass',
+                role: 'admin'
             }
         ],
         developers: [
@@ -52,6 +62,13 @@ class TestDataStoreAccess implements DataStoreAccess{
         return {
             success:(foundRecord !== null),
             data: foundRecord
+        }
+    }
+
+    async deleteWhere(argsObj){
+        return {
+            success:true,
+            data:null
         }
     }
 
