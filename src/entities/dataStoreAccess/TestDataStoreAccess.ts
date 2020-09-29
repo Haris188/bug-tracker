@@ -4,12 +4,13 @@ import DataStoreResponse from './DataStoreResponse'
 import {
     filter,
     remove,
-    isMatch
+    isMatch,
+    trimEnd
 } from 'lodash'
 
 class TestDataStoreAccess implements DataStoreAccess{
-    ref:any
-    dataStore = {
+    private ref:any
+    private dataStore = {
         accounts: [
             {
                 id: 1,
@@ -35,8 +36,16 @@ class TestDataStoreAccess implements DataStoreAccess{
                 id: 1,
                 softwareDone:1
             }
+        ],
+        tickets:[
+            {
+                id:'1',
+                userId:'4',
+                problem: 'test problem',
+                description: 'hello there',
+                priority: 'high'
+            }
         ]
-
     }
 
     async write(data:any){
@@ -71,6 +80,22 @@ class TestDataStoreAccess implements DataStoreAccess{
             success:true,
             data:null
         }
+    }
+
+    async updateWhere(updateData, whereFields){
+        this.dataStore[this.ref]
+        .forEach((ticket,index)=>{
+            if(isMatch(ticket, whereFields)){
+                this.dataStore[this.ref][index]
+                 = {
+                     ...this.dataStore[this.ref][index],
+                     ...updateData
+                 }
+            }
+        })
+
+        console.log(this.dataStore)
+        return {success:true, data:null }
     }
 
     private findRef(path:string){

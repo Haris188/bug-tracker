@@ -1,6 +1,7 @@
 
 import UserFactory from '../entities/user/UserFactory'
 import ProjectFactory from '../entities/project/ProjectFactory'
+import TicketFactory from '../entities/ticket/TicketFactory'
 
 const invalidUserResponse = {
     success:false,
@@ -8,8 +9,9 @@ const invalidUserResponse = {
 }
 
 class Interactors {
-    userFactory = new UserFactory()
-    projectFactory = new ProjectFactory()
+    private userFactory = new UserFactory()
+    private projectFactory = new ProjectFactory()
+    private ticketFactory = new TicketFactory()
 
     async signUp(userData:any){
         try {
@@ -80,6 +82,26 @@ class Interactors {
 
         return await 
         projectToCreate.create()
+    }
+
+    async addNewTicket(ticketData){
+        const ticketToCreate = this
+        .ticketFactory
+        .createTicketFromDataWithId(ticketData)
+
+        return await
+        ticketToCreate.create()
+    }
+
+    async setTicketUser(updateData){
+        const ticketToUpdate = await this
+        .ticketFactory
+        .retrieveTicketWithId(updateData.ticketId)
+
+        return ticketToUpdate
+        ? await ticketToUpdate
+        .setUser(updateData.userId)
+        :{success:false, data:'No Ticket found with id'}
     }
 }
 

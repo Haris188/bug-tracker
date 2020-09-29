@@ -56,14 +56,31 @@ const dataStore = new DataStore()
 // })
 // .then(value=>console.log(value))
 
+// new Interactors()
+// .addNewProject({
+//     project:{
+//         name: 'project',
+//         description: 'a project description',
+//     },
+//     users:[
+//         1,2,4
+//     ]
+// })
+// .then(value=>console.log(value))
+
+// new Interactors()
+// .addNewTicket({
+//     problem: 'Submit button not working',
+//     description: 'description',
+//     priority: 'high',
+//     userId: 1,
+//     projectId: 2
+// })
+// .then(value=>console.log(value))
+
 new Interactors()
-.addNewProject({
-    project:{
-        name: 'project',
-        description: 'a project description',
-    },
-    users:[
-        1,2,4
-    ]
+.setTicketUser({
+    ticketId: '1',
+    userId: '10'
 })
 .then(value=>console.log(value))

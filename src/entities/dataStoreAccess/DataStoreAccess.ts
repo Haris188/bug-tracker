@@ -7,6 +7,7 @@ interface DataStoreAccess{
     write(fields:any):Promise<DataStoreResponse>
     readWhere(argObj:object): Promise<DataStoreResponse>
     deleteWhere(argsObj): Promise<QueryResponse>
+    updateWhere(updateData, fieldsToUpdate): Promise<QueryResponse>
 }
 
 export default DataStoreAccess
