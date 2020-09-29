@@ -4,9 +4,10 @@ import TestAuthentication from '../authenticationLib/TestAuthentication'
 
 
 class Authenticator{
-    signUpData:any
-    dataStore:DataStoreAccess
-    authenticationLib = new TestAuthentication()
+    private signUpData:any
+    private dataStore:DataStoreAccess
+    private authenticationLib 
+    = new TestAuthentication()
 
     async signUpAdmin(userData:any){
         this.signUpData = userData
@@ -108,12 +109,6 @@ class Authenticator{
     async signInAsProjectManager(userData){
         return await 
         this.signIn(userData)
-    }
-
-    async checkIsLoggedInOfUserWithId(userId){
-        return await this
-        .authenticationLib
-        .checkIsLoggedInWithUserId(userId)
     }
 
     private async signIn(userData){

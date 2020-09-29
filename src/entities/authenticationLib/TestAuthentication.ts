@@ -8,13 +8,6 @@ class TestAuthentication implements Authentication{
             data: null
         }
     }
-
-    async checkIsLoggedInWithUserId(userId){
-        return {
-            success:true,
-            data: true
-        }
-    }
 }
 
 export default TestAuthentication

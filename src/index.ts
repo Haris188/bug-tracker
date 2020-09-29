@@ -1,7 +1,7 @@
 
 import Interactors from './interactors/Interactors'
 import DataStore from './entities/dataStoreAccess/TestDataStoreAccess'
-import UserFactory from './entities/UserFactory'
+import UserFactory from './entities/user/UserFactory'
 
 // new Interactors().signUp({
 //     accountData:{
@@ -49,9 +49,21 @@ const dataStore = new DataStore()
 //     console.log(value)
 // })
 
+// new Interactors()
+// .removeUser({
+//     deleterId:5,
+//     deleteeId: 1
+// })
+// .then(value=>console.log(value))
+
 new Interactors()
-.removeUser({
-    deleterId:6,
-    deleteeId: 1
+.addNewProject({
+    project:{
+        name: 'project',
+        description: 'a project description',
+    },
+    users:[
+        1,2,4
+    ]
 })
 .then(value=>console.log(value))

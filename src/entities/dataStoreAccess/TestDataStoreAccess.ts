@@ -42,6 +42,7 @@ class TestDataStoreAccess implements DataStoreAccess{
     async write(data:any){
         this.dataStore[this.ref]
         .push(data)
+        console.log(this.dataStore)
         return {success:true,data:null}
     }
  

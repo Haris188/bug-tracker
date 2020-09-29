@@ -1,9 +1,10 @@
-import Admin from "./user/Admin"
-import Developer from "./user/Developer"
-import Tester from "./user/Tester"
-import ProjectManager from "./user/ProjectManager"
-import DataStoreGetter from "./dataStoreAccess/DataStoreGetter"
-import UserData from "./user/UserData"
+import Admin from "./Admin"
+import Developer from "./Developer"
+import Tester from "./Tester"
+import ProjectManager from "./ProjectManager"
+import DataStoreGetter from "../dataStoreAccess/DataStoreGetter"
+import UserData from "./UserData"
+import {v4 as uuid} from 'uuid'
 
 class UserFactory{
     userTypes:Array<string>
@@ -29,6 +30,22 @@ class UserFactory{
             default:
                 throw new Error('Invalid user type')
         }
+    }
+
+    async createUserFromDataWithId(userData){
+        let {accountData} = userData
+        accountData = {
+            ...userData.accountData,
+            id: uuid()
+        }
+
+        const idAttachedData = {
+            ...userData,
+            accountData
+        }
+
+        return await this
+        .createUserFromData(idAttachedData)
     }
 
     async retrieveWithEmailPassword(loginCred){

@@ -1,6 +1,6 @@
 
-import UserFactory from '../entities/UserFactory'
-import User from '../entities/user/User'
+import UserFactory from '../entities/user/UserFactory'
+import ProjectFactory from '../entities/project/ProjectFactory'
 
 const invalidUserResponse = {
     success:false,
@@ -9,12 +9,13 @@ const invalidUserResponse = {
 
 class Interactors {
     userFactory = new UserFactory()
+    projectFactory = new ProjectFactory()
 
     async signUp(userData:any){
         try {
             const user:any = this
             .userFactory
-            .createUserFromData(userData)
+            .createUserFromDataWithId(userData)
 
             const res = await user.signUp()
             return res
@@ -40,17 +41,7 @@ class Interactors {
     }
 
     async checkUserLogin(userId){
-        try {
-            const user:any = await this
-            .userFactory
-            .retrieveWithUserId(userId)
-
-            return await user.checkIsLoggedIn()
-        } 
-        catch (error) {
-            console.log(error)
-            return invalidUserResponse
-        }
+        // Implement using boundary
     }
 
     async removeUser(deletionData){
@@ -69,20 +60,26 @@ class Interactors {
             const deleterIsAdmin
             = deleleter.getRole() === 'admin'
 
-            if(deleterIsAdmin){
-                return await 
-                deletee.delete()
-            }
-
-            return {
+            return deleterIsAdmin
+            ? await deletee.delete()
+            : {
                 success: false,
                 data: 'Deleter is not admin'
-            }
+                }
         } 
         catch (error) {
             console.log(error)
             return invalidUserResponse
         }
+    }
+
+    async addNewProject(projectData){
+        const projectToCreate = this
+        .projectFactory
+        .createProjectFromDataWithId(projectData)
+
+        return await 
+        projectToCreate.create()
     }
 }
 

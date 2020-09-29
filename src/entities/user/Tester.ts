@@ -2,11 +2,12 @@
 import User from './User'
 import Authenticator from '../authenticator/Authenticator'
 import DataStoreGetter from '../dataStoreAccess/DataStoreGetter'
+import UserData from './UserData'
 
 class Tester implements User{
-    userData:any
+    private userData:any
 
-    constructor(userData){
+    constructor(userData:UserData){
         this.userData = userData
     }
 
@@ -22,17 +23,6 @@ class Tester implements User{
         .signInAsTester(this.userData)
     }
 
-    async checkIsLoggedIn(){
-        return await
-        new Authenticator()
-        .checkIsLoggedInOfUserWithId(
-            this
-            .userData
-            .accountData
-            .id
-        )
-    }
-
     async delete(){
         const accountDeleteResponse
         = await this.deleteAccountInfo()
@@ -43,6 +33,23 @@ class Tester implements User{
         : accountDeleteResponse
 
         return userSpecificDeleteResponse
+    }
+
+    async addProjectWithId(projectId){
+        const dataStore
+        = new DataStoreGetter()
+        .getAccordingToEnv()
+
+        const userId = this.userData.accountData.id
+
+        const refResponse = await dataStore
+        .setIfNotCreateRef(`id_${userId}_projects`)
+
+        return refResponse.success
+        ? await dataStore.write({
+            projectId
+        })
+        : refResponse
     }
 
     getRole(){
