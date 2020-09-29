@@ -2,6 +2,8 @@
 import UserFactory from '../entities/user/UserFactory'
 import ProjectFactory from '../entities/project/ProjectFactory'
 import TicketFactory from '../entities/ticket/TicketFactory'
+import CommentFactory from '../entities/comment/CommentFactory'
+import TicketDataRetriever from '../entities/ticket/TicketDataRetriever'
 
 const invalidUserResponse = {
     success:false,
@@ -12,6 +14,8 @@ class Interactors {
     private userFactory = new UserFactory()
     private projectFactory = new ProjectFactory()
     private ticketFactory = new TicketFactory()
+    private commentFactory = new CommentFactory()
+    private ticketDataRetriever = new TicketDataRetriever()
 
     async signUp(userData:any){
         try {
@@ -102,6 +106,38 @@ class Interactors {
         ? await ticketToUpdate
         .setUser(updateData.userId)
         :{success:false, data:'No Ticket found with id'}
+    }
+
+    async addCommentToTicket(commentData){
+        const comment = this
+        .commentFactory
+        .createCommentFromDataWithId(commentData)
+
+        return await 
+        comment.save()
+    }
+
+    async getCurrentUserTicketsForProject(ticketData){
+        return await this
+        .ticketDataRetriever
+        .getAllTicketsWhere(ticketData)
+    }
+
+    async getAllTicketsForProject(projectId){
+        return await this
+        .ticketDataRetriever
+        .getAllTicketsWhere({
+            projectId
+        })
+    }
+
+    async completeTicketWithId(ticketId){
+        const ticketToUpdate = await this
+        .ticketFactory
+        .retrieveTicketWithId(ticketId)
+
+        return await 
+        ticketToUpdate.complete()
     }
 }
 

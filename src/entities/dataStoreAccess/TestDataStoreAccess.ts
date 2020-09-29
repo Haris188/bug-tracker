@@ -13,19 +13,19 @@ class TestDataStoreAccess implements DataStoreAccess{
     private dataStore = {
         accounts: [
             {
-                id: 1,
+                id: '1',
                 email: 'haris@gmail.com',
                 password: 'anypass',
                 role: 'developer'
             },
             {
-                id: 2,
+                id: '2',
                 email: 'ahmad@gmail.com',
                 password: 'anypass',
                 role: 'developer'
             },
             {
-                id: 5,
+                id: '5',
                 email: 'ahmad@gmail.com',
                 password: 'anypass',
                 role: 'admin'
@@ -33,17 +33,36 @@ class TestDataStoreAccess implements DataStoreAccess{
         ],
         developers: [
             {
-                id: 1,
+                id: '1',
                 softwareDone:1
             }
         ],
         tickets:[
             {
-                id:'1',
-                userId:'4',
-                problem: 'test problem',
-                description: 'hello there',
-                priority: 'high'
+                problem: 'Submit button not working',
+                description: 'description',
+                priority: 'high',
+                userId: '1',
+                projectId: '2',
+                id: '5af5a79b-c3c4-40c9-ae42-16f9bf887435',
+                completed:false
+            },
+            {
+                problem: 'Alert dialog not opening',
+                description: 'description',
+                priority: 'low',
+                userId: '2',
+                projectId: '2',
+                id: '4af5a79b-c3c4-40c9-ae42-16f9bf887435',
+                completed:false
+              }
+        ],
+        comments:[
+            {
+                ticketId: '4af5a79b-c3c4-40c9-ae42-16f9bf887435',
+                comment: 'Getting this error while screen on as well',
+                userId: '1',
+                id: '698bfd31-f418-4a7f-81a6-e440d3ad8465'
             }
         ]
     }

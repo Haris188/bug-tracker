@@ -38,4 +38,17 @@ export default class Ticket{
           )
         : setRefResponse
     }
+
+    async complete(){
+        const setRefResponse 
+        = await this.dataStore
+        .setIfNotCreateRef('tickets')
+
+        return setRefResponse.success
+        ? await this.dataStore.updateWhere(
+            {complete:true},
+            {id: this.ticketData.id}
+          )
+        :setRefResponse
+    }
 }

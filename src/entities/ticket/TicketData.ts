@@ -6,5 +6,5 @@ export default interface TicketData{
     priority: string
     userId: string
     projectId: string
-
+    completed: boolean
 }

@@ -15,7 +15,7 @@ import UserFactory from './entities/user/UserFactory'
 //     console.log(value)
 // })
 
-const dataStore = new DataStore()
+// const dataStore = new DataStore()
 // dataStore.setIfNotCreateRef('test')
 // dataStore.write({test1:'test'})
 // dataStore.setIfNotCreateRef('hele')
@@ -78,9 +78,32 @@ const dataStore = new DataStore()
 // })
 // .then(value=>console.log(value))
 
+// new Interactors()
+// .setTicketUser({
+//     ticketId: '1',
+//     userId: '10'
+// })
+// .then(value=>console.log(value))
+
+// new Interactors()
+// .addCommentToTicket({
+//     ticketId: '1',
+//     text: 'Hello world',
+//     userId: '1'
+// })
+// .then(value=>console.log(value))
+
+// new Interactors()
+// .getCurrentUserTicketsForProject({
+//     projectId: '2',
+//     userId: '1'
+// })
+// .then(value=>console.log(value))
+
+// new Interactors()
+// .getAllTicketsForProject('2')
+// .then(value=>console.log(value))
+
 new Interactors()
-.setTicketUser({
-    ticketId: '1',
-    userId: '10'
-})
+.completeTicketWithId('5af5a79b-c3c4-40c9-ae42-16f9bf887435')
 .then(value=>console.log(value))
