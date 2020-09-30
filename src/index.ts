@@ -115,6 +115,35 @@ import UserFactory from './entities/user/UserFactory'
 // })
 // .then(value=>console.log(value))
 
-new Interactors()
-.getAttachementsOfTicket('4af5a79b-c3c4-40c9-ae42-16f9bf887435')
-.then(value=>console.log(value))
+// new Interactors()
+// .getAttachementsOfTicket('4af5a79b-c3c4-40c9-ae42-16f9bf887435')
+// .then(value=>console.log(value))
+
+// import PgDataStoreAccess from './entities/dataStoreAccess/PgDataStoreAccess'
+
+// const store = new PgDataStoreAccess()
+
+// store.setIfNotCreateRef('accounts')
+// .then(value=>{
+//     console.log(value)
+//     store.updateWhere({name: 'sheldon'},{id:'1'})
+//     .then(value=>console.log(value))
+// })
+
+
+
+// import submitQuery from './entities/dataStoreAccess/PgDataStoreAccess/submitQuery'
+
+// submitQuery('SELECT * FROM test2;')
+// .then(value=>console.log(value))
+
+// import QueryCreator from './entities/dataStoreAccess/PgDataStoreAccess/QueryCreator'
+
+// console.log(new QueryCreator()
+// .getUpdateWhereQuery('accounts',{
+//     id:'2',
+//     email: 'harisahamd',
+//     number: '23423'
+// },{
+//     id:'2', role: 'dev'
+// }))
