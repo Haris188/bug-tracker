@@ -64,7 +64,13 @@ class TestDataStoreAccess implements DataStoreAccess{
                 userId: '1',
                 id: '698bfd31-f418-4a7f-81a6-e440d3ad8465'
             }
+        ],
+        'ticket_4af5a79b-c3c4-40c9-ae42-16f9bf887435_attachments': [
+            { 
+                path: 'http://pathtofile.com/paht' 
+            } 
         ]
+
     }
 
     async write(data:any){

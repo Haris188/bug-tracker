@@ -139,6 +139,26 @@ class Interactors {
         return await 
         ticketToUpdate.complete()
     }
+
+    async addAttachmentToTicketWithId(attachmentData){
+        const ticketToUpdate = await this
+        .ticketFactory
+        .retrieveTicketWithId(attachmentData.ticketId)
+
+        return await
+        ticketToUpdate
+        .addAttachment(attachmentData.file)
+    }
+
+    async getAttachementsOfTicket(ticketId){
+        const ticketToWorkWith = await this
+        .ticketFactory
+        .retrieveTicketWithId(ticketId)
+
+        return await 
+        ticketToWorkWith
+        .getAllAttachments()
+    }
 }
 
 export default Interactors

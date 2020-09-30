@@ -104,6 +104,17 @@ import UserFactory from './entities/user/UserFactory'
 // .getAllTicketsForProject('2')
 // .then(value=>console.log(value))
 
+// new Interactors()
+// .completeTicketWithId('5af5a79b-c3c4-40c9-ae42-16f9bf887435')
+// .then(value=>console.log(value))
+
+// new Interactors()
+// .addAttachmentToTicketWithId({
+//     ticketId:'4af5a79b-c3c4-40c9-ae42-16f9bf887435',
+//     file: ''
+// })
+// .then(value=>console.log(value))
+
 new Interactors()
-.completeTicketWithId('5af5a79b-c3c4-40c9-ae42-16f9bf887435')
+.getAttachementsOfTicket('4af5a79b-c3c4-40c9-ae42-16f9bf887435')
 .then(value=>console.log(value))
