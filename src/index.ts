@@ -126,7 +126,7 @@ import UserFactory from './entities/user/UserFactory'
 // store.setIfNotCreateRef('accounts')
 // .then(value=>{
 //     console.log(value)
-//     store.updateWhere({name: 'sheldon'},{id:'1'})
+//     store.deleteWhere({id:1})
 //     .then(value=>console.log(value))
 // })
 
@@ -140,10 +140,7 @@ import UserFactory from './entities/user/UserFactory'
 // import QueryCreator from './entities/dataStoreAccess/PgDataStoreAccess/QueryCreator'
 
 // console.log(new QueryCreator()
-// .getUpdateWhereQuery('accounts',{
-//     id:'2',
-//     email: 'harisahamd',
-//     number: '23423'
-// },{
-//     id:'2', role: 'dev'
+// .getDeleteWhereQuery('accounts',{
+//     id: '2',
+//     email: 'hasr'
 // }))

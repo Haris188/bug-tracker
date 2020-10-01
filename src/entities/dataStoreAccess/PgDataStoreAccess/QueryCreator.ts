@@ -25,6 +25,13 @@ class QueryCreator {
         return `UPDATE ${ref} SET ${updateComparison} WHERE ${whereComparison};`
     }
 
+    getDeleteWhereQuery(ref, whereFields){
+        const whereComparison = this
+        .createComparsonStringFromMap(whereFields, 'AND')
+
+        return `DELETE FROM ${ref} WHERE ${whereComparison};`
+    }
+
     getCreateColumnsQuery(ref, columns){
         let query = ''
 

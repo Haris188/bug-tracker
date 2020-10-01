@@ -48,7 +48,10 @@ class PgDataStoreAccess implements DataStoreAccess{
     }
 
     async deleteWhere(whereFields){
-        return {success:true, data:null}
+        const query = this.queryCreator
+        .getDeleteWhereQuery(this.ref, whereFields)
+
+        return await submitQuery(query)
     }
 
     private async setTableCreatedFlagIfNoTable(errData){
