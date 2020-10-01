@@ -129,9 +129,11 @@ class Authenticator{
     }
 
     private async storeAccountData(){
-        this.dataStore.setIfNotCreateRef('accounts')
+        await this
+        .dataStore
+        .setIfNotCreateRef('accounts')
 
-        return this.dataStore
+        return await this.dataStore
         .write(
             this.signUpData
             .accountData
@@ -139,42 +141,50 @@ class Authenticator{
     }
 
     private async storeAdminData(){
-        this.dataStore.setIfNotCreateRef('admins')
+        await this
+        .dataStore
+        .setIfNotCreateRef('admins')
 
-        return this.dataStore
+        return await this.dataStore
         .write(
             this.signUpData
-            .typeSpecificData
+            .userSpecificData
         )
     }
 
     private async storeDeveloperData(){
-        this.dataStore.setIfNotCreateRef('developers')
+        await this
+        .dataStore
+        .setIfNotCreateRef('developers')
 
-        return this.dataStore
+        return await this.dataStore
         .write(
             this.signUpData
-            .typeSpecificData
+            .userSpecificData
         )
     }
 
     private async storeTesterData(){
-        this.dataStore.setIfNotCreateRef('tester')
+        await this
+        .dataStore
+        .setIfNotCreateRef('tester')
 
-        return this.dataStore
+        return await this.dataStore
         .write(
             this.signUpData
-            .typeSpecificData
+            .userSpecificData
         )
     }
 
     private async storeProjectManagerData(){
-        this.dataStore.setIfNotCreateRef('projectManager')
+        await this
+        .dataStore
+        .setIfNotCreateRef('projectManager')
 
-        return this.dataStore
+        return await this.dataStore
         .write(
             this.signUpData
-            .typeSpecificData
+            .userSpecificData
         )
     }
 

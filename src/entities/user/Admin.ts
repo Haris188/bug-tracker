@@ -43,7 +43,7 @@ class Admin implements User{
         const userId = this.userData.accountData.id
 
         const refResponse = await dataStore
-        .setIfNotCreateRef(`id_${userId}_projects`)
+        .setIfNotCreateRef(`"id_${userId}_projects"`)
 
         return refResponse.success
         ? await dataStore.write({
@@ -82,7 +82,7 @@ class Admin implements User{
 
         return refResponse
         ? await dataStore.deleteWhere({
-            id: this.userData.accountData.id
+            userId: this.userData.accountData.id
         })
         : refResponse
     }

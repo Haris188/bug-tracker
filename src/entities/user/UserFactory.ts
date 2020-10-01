@@ -33,15 +33,23 @@ class UserFactory{
     }
 
     async createUserFromDataWithId(userData){
-        let {accountData} = userData
+        const id = uuid()
+        let {accountData, userSpecificData} = userData
+
         accountData = {
             ...userData.accountData,
-            id: uuid()
+            id
+        }
+
+        userSpecificData = {
+            ...userData.userSpecificData,
+            userId: id
         }
 
         const idAttachedData = {
             ...userData,
-            accountData
+            accountData,
+            userSpecificData
         }
 
         return await this

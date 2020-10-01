@@ -19,7 +19,7 @@ class Interactors {
 
     async signUp(userData:any){
         try {
-            const user:any = this
+            const user:any = await this
             .userFactory
             .createUserFromDataWithId(userData)
 

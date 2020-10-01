@@ -82,7 +82,7 @@ class ProjectManager implements User{
 
         return refResponse
         ? await dataStore.deleteWhere({
-            id: this.userData.accountData.id
+            userId: this.userData.accountData.id
         })
         : refResponse
     }

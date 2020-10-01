@@ -52,7 +52,7 @@ export default class Ticket{
 
         return setRefResponse.success
         ? await this.dataStore.updateWhere(
-            {complete:true},
+            {completed:true},
             {id: this.ticketData.id}
           )
         :setRefResponse

@@ -1,8 +1,9 @@
 import TestDataStoreAccess from "./TestDataStoreAccess";
+import PgDataStoreAccess from './PgDataStoreAccess'
 
 class DataStoreGetter{
     getAccordingToEnv(){
-        return new TestDataStoreAccess()
+        return new PgDataStoreAccess()
     }
 }
 
