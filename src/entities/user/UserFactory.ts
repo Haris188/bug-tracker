@@ -56,9 +56,12 @@ class UserFactory{
         .createUserFromData(idAttachedData)
     }
 
-    async retrieveWithEmailPassword(loginCred){
+    async retrieveWithEmailPassword(email, password){
         const userDataResponse = await
-        this.getUserDataFromAccountsWith(loginCred)
+        this.getUserDataFromAccountsWith({
+            email,
+            password
+        })
 
         return this.createUserFromData({
             accountData: userDataResponse.data[0],
@@ -79,7 +82,7 @@ class UserFactory{
         })
     }
 
-    async getUserDataFromAccountsWith(loginCred){
+    async getUserDataFromAccountsWith(whereFields){
         const dataStore = await 
         new DataStoreGetter()
         .getAccordingToEnv()
@@ -88,7 +91,7 @@ class UserFactory{
         dataStore.setIfNotCreateRef('accounts')
 
         const accountData = refSetResponse.success
-        ? await dataStore.readWhere(loginCred)
+        ? await dataStore.readWhere(whereFields)
         : refSetResponse
 
         return accountData

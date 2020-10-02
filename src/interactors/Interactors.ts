@@ -32,18 +32,28 @@ class Interactors {
         }
     }
 
-    async loginWithEmailPassword(loginCred){
+    async getUserWithEmailPassword(email,password){
         try {
             const user:any = await this
             .userFactory
-            .retrieveWithEmailPassword(loginCred)
+            .retrieveWithEmailPassword(email,password)
 
-            return await user.login()
+            return user
+            .getData()
         } 
         catch (error) {
             console.log(error)
             return invalidUserResponse
         }
+    }
+
+    async getUserWithId(id){
+        const user = await this
+        .userFactory
+        .retrieveWithUserId(id)
+
+        return user
+        .getData()
     }
 
     async checkUserLogin(userId){

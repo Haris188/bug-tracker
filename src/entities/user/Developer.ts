@@ -57,6 +57,18 @@ class Developer implements User{
         .accountData.role
     }
 
+    getData(){
+        return this.userData 
+        ? {
+            success: true,
+            data: this.userData
+          }
+        : {
+            success:false,
+            data:null
+          }
+    }
+
     private async deleteAccountInfo(){
         const dataStore 
         = new DataStoreGetter()
