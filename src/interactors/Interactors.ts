@@ -4,6 +4,8 @@ import ProjectFactory from '../entities/project/ProjectFactory'
 import TicketFactory from '../entities/ticket/TicketFactory'
 import CommentFactory from '../entities/comment/CommentFactory'
 import TicketDataRetriever from '../entities/ticket/TicketDataRetriever'
+import AttachmentFactory from '../entities/attachment/AttachmentFactory'
+import AttachmentData from '../entities/attachment/AttachmentData'
 
 const invalidUserResponse = {
     success:false,
@@ -16,6 +18,7 @@ class Interactors {
     private ticketFactory = new TicketFactory()
     private commentFactory = new CommentFactory()
     private ticketDataRetriever = new TicketDataRetriever()
+    private attachmentFactory = new AttachmentFactory()
 
     async signUp(userData:any){
         try {
@@ -150,14 +153,13 @@ class Interactors {
         ticketToUpdate.complete()
     }
 
-    async addAttachmentToTicketWithId(attachmentData){
-        const ticketToUpdate = await this
-        .ticketFactory
-        .retrieveTicketWithId(attachmentData.ticketId)
+    async addAttachmentToTicketWithId(attachmentData:AttachmentData){
+        const attachmentToAdd = this
+        .attachmentFactory
+        .createAttachementFromDataWithId(attachmentData)
 
-        return await
-        ticketToUpdate
-        .addAttachment(attachmentData.file)
+        return await 
+        attachmentToAdd.add()
     }
 
     async getAttachementsOfTicket(ticketId){

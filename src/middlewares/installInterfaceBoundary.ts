@@ -1,6 +1,7 @@
 
 import * as passport from 'passport'
 import Interactors from '../interactors/Interactors'
+import * as express from 'express'
 
 const failedResponse = {
     success: false,
@@ -9,9 +10,20 @@ const failedResponse = {
 
 export default (app)=>{
     const interactors = new Interactors()
-    
-    app.get('/test',(req,res)=>{
-        res.send('hello world')
+    app.post('/getTicketAttachments',async (req,res)=>{
+        const body = req.body
+
+        if(body){
+            const {ticketId} = body
+            const getResponse = await 
+            interactors
+            .getAttachementsOfTicket(ticketId)
+
+            res.send(getResponse)
+        }
+        else{
+            res.send(failedResponse)
+        }
     })
 
     app.post('/login', (req:any,res:any, next:any)=>{
@@ -191,4 +203,11 @@ export default (app)=>{
             res.send(failedResponse)
         }
     })
+
+    
+
+    app.use(
+        '/file',
+        express.static(process.cwd() + '/fileStorage')
+    )
 }

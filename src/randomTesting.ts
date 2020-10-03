@@ -150,3 +150,24 @@ import UserFactory from './entities/user/UserFactory'
 //     email: 'hasr'
 // }))
 
+
+export default ()=>{
+    // new Interactors()
+    // .addAttachmentToTicketWithId({
+    //     meta:{
+    //         name: 'file.jpg',
+    //         type: 'image/jpg',
+    //         ticketId: 'randomg id',
+            
+    //     },
+    //     file:{
+    //         buffer:'buffer',
+    //         hello: 'hellofile'
+    //     }
+    // })
+    // .then(value=>console.log(value))
+
+    new Interactors()
+    .getAttachementsOfTicket('22a265da-840c-4da5-974c-252f2f9b40ee')
+    .then(value=>console.log(value))
+}

@@ -12,6 +12,7 @@ export default ()=>{
     middlewares.installSession(app)
     middlewares.installPassport(app)
     middlewares.installCors(app)
+    middlewares.installMulter(app)
     middlewares.installInterfaceBoundary(app)
 
     app.listen(port, ()=>{

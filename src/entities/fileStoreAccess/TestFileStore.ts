@@ -11,9 +11,17 @@ implements FileStoreAccess{
     }
 
     async write(file){
+        console.log(file)
         return {
             success: true,
-            data: 'http://pathtofile.com/paht'
+            data: null
+        }
+    }
+
+    async generateUrl(){
+        return {
+            success: true,
+            data: 'http://fsdfsd'
         }
     }
 }

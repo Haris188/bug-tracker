@@ -74,11 +74,11 @@ export default class Ticket{
         const setRefResponse = await this
         .dataStore
         .setIfNotCreateRef(
-            `ticket_${this.ticketData.id}_attachments`
+            `attachments`
         )
 
         return setRefResponse.success
-        ? await this.dataStore.readWhere({})
+        ? await this.dataStore.readWhere({ticketId: this.ticketData.id})
         : setRefResponse
     }
 
