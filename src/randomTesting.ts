@@ -168,6 +168,8 @@ export default ()=>{
     // .then(value=>console.log(value))
 
     new Interactors()
-    .getAttachementsOfTicket('22a265da-840c-4da5-974c-252f2f9b40ee')
+    .getCommentsForTicket("52b3c5c6-4ca0-4f28-a99d-2e4ca6b096be")
     .then(value=>console.log(value))
+
+
 }

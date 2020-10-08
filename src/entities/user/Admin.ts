@@ -6,6 +6,9 @@ import UserData from './UserData'
 
 class Admin implements User{
     private userData:any
+    private dataStore
+    = new DataStoreGetter()
+    .getAccordingToEnv()     
 
     constructor(userData:UserData){
         this.userData = userData
@@ -36,20 +39,27 @@ class Admin implements User{
     }
 
     async addProjectWithId(projectId){
-        const dataStore
-        = new DataStoreGetter()
-        .getAccordingToEnv()
-
         const userId = this.userData.accountData.id
 
-        const refResponse = await dataStore
+        const refResponse = await this
+        .dataStore
         .setIfNotCreateRef(`"id_${userId}_projects"`)
 
         return refResponse.success
-        ? await dataStore.write({
+        ? await this.dataStore.write({
             projectId
         })
         : refResponse
+    }
+
+    async getAllProject(){
+        const projectIds = await
+        this.getAllProjectIds()
+
+        return projectIds.success
+        ? await this
+        .getProjectsWithIds(projectIds.data)
+        : projectIds
     }
 
     getRole(){
@@ -67,6 +77,40 @@ class Admin implements User{
             success:false,
             data:null
           }
+    }
+
+    private async getAllProjectIds(){
+        const userId = this.userData.accountData.id
+
+        const setRefResponse = await
+        this.dataStore
+        .setIfNotCreateRef(`"id_${userId}_projects"`)
+
+        return setRefResponse.success
+        ? await this.dataStore
+          .readWhere({})
+        : setRefResponse
+    }
+
+    private async getProjectsWithIds(ids){
+        const setRefResponse =await
+        this.dataStore
+        .setIfNotCreateRef('projects')
+
+        const projects = ids.map(async (currentId)=>{
+            const project = await this
+            .dataStore
+            .readWhere({id:currentId.projectid})
+
+            return project.data[0]
+        })
+
+        const resolved = await
+        Promise.all(projects)
+
+        return setRefResponse.success
+        ? {success:true, data: resolved}
+        : setRefResponse
     }
 
     private async deleteAccountInfo(){

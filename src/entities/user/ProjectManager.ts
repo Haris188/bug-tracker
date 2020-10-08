@@ -6,6 +6,9 @@ import UserData from './UserData'
 
 class ProjectManager implements User{
     private userData:any
+    private dataStore
+    = new DataStoreGetter()
+    .getAccordingToEnv()
 
     constructor(userData:UserData){
         this.userData = userData
@@ -52,6 +55,16 @@ class ProjectManager implements User{
         : refResponse
     }
 
+    async getAllProject(){
+        const projectIds = await
+        this.getAllProjectIds()
+
+        return projectIds.success
+        ? await this
+        .getProjectsWithIds(projectIds.data)
+        : projectIds
+    }
+
     getRole(){
         return this.userData
         .accountData.role
@@ -67,6 +80,40 @@ class ProjectManager implements User{
             success:false,
             data:null
           }
+    }
+
+    private async getAllProjectIds(){
+        const userId = this.userData.accountData.id
+
+        const setRefResponse = await
+        this.dataStore
+        .setIfNotCreateRef(`"id_${userId}_projects"`)
+
+        return setRefResponse.success
+        ? await this.dataStore
+          .readWhere({})
+        : setRefResponse
+    }
+
+    private async getProjectsWithIds(ids){
+        const setRefResponse =await
+        this.dataStore
+        .setIfNotCreateRef('projects')
+
+        const projects = ids.map(async (currentId)=>{
+            const project = await this
+            .dataStore
+            .readWhere({id:currentId.projectid})
+
+            return project.data[0]
+        })
+
+        const resolved = await
+        Promise.all(projects)
+
+        return setRefResponse.success
+        ? {success:true, data: resolved}
+        : setRefResponse
     }
 
     private async deleteAccountInfo(){

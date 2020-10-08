@@ -6,7 +6,8 @@ interface User {
     getRole(): String
     delete(): Promise<QueryResponse>
     addProjectWithId(projectId): Promise<QueryResponse>
-    getData(): QueryResponse
+    getData(): QueryResponse,
+    getAllProject(): Promise<QueryResponse>
 }
 
 export default User

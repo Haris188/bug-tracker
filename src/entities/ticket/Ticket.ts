@@ -18,8 +18,12 @@ export default class Ticket{
     }
 
     async create(){
-        return await 
+        const ticketRes = await 
         this.saveTicketToDataStore()
+
+        return ticketRes.success
+        ? await this.getTicketWithId()
+        : ticketRes
     }
 
     async saveTicketToDataStore(){
@@ -80,6 +84,43 @@ export default class Ticket{
         return setRefResponse.success
         ? await this.dataStore.readWhere({ticketId: this.ticketData.id})
         : setRefResponse
+    }
+
+    async getAllComments(){
+        const dataStore = new DataStoreGetter()
+        .getAccordingToEnv()
+
+        const setRef = await dataStore
+        .setIfNotCreateRef('comments')
+
+        return setRef.success
+        ? await dataStore
+        .readWhere({ticketid: this.ticketData.id})
+        : setRef
+    }
+
+    private async getTicketWithId(){
+        const dataStore = new DataStoreGetter()
+        .getAccordingToEnv()
+
+        const refSet = await
+        dataStore
+        .setIfNotCreateRef('tickets')
+
+        const ticket = refSet.success
+        ? await dataStore
+          .readWhere({id: this.ticketData.id})
+        : refSet
+
+        if(ticket.success && ticket.data.length > 0){
+            ticket.data = ticket.data[0]
+        }
+        else{
+            ticket.data=null
+        }
+
+        return ticket
+
     }
 
     private async storeAttachmentToFileStore(file){

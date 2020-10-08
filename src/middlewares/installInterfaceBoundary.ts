@@ -10,21 +10,6 @@ const failedResponse = {
 
 export default (app)=>{
     const interactors = new Interactors()
-    app.post('/getTicketAttachments',async (req,res)=>{
-        const body = req.body
-
-        if(body){
-            const {ticketId} = body
-            const getResponse = await 
-            interactors
-            .getAttachementsOfTicket(ticketId)
-
-            res.send(getResponse)
-        }
-        else{
-            res.send(failedResponse)
-        }
-    })
 
     app.post('/login', (req:any,res:any, next:any)=>{
         passport.authenticate('local',(err,user)=>{
@@ -62,6 +47,25 @@ export default (app)=>{
         }
     })
 
+    app.get('/getCurrentUser',(req,res)=>{
+        const loggedIn = req.isAuthenticated()
+        if(loggedIn){
+            res.send({
+                success:true,
+                data: {
+                    ...req.user,
+                    loggedIn
+                }
+            })
+        }
+        else{
+            res.send({
+                success:true,
+                data:{loggedIn}
+            })
+        }
+    })
+
     app.use((req,res,next)=>{
         const userAuthenticated
         = req.isAuthenticated()
@@ -70,7 +74,10 @@ export default (app)=>{
             next()
         }
         else{
-            res.send(failedResponse)
+            res.send({
+                success:false,
+                data:'User not authenticated'
+            })
         }
     })
 
@@ -97,6 +104,8 @@ export default (app)=>{
 
         if(body){
             const projectData = body
+            projectData.users.push(req.user.id)
+            
             const addResponse = await 
             interactors
             .addNewProject(projectData)
@@ -156,11 +165,28 @@ export default (app)=>{
         }
     })
 
+    app.post('/getCommentsForTicket', async(req,res)=>{
+        const body = req.body
+
+        if(body){
+            const {ticketId} = body
+            const commentResponse = await 
+            interactors
+            .getCommentsForTicket(ticketId)
+
+            res.send(commentResponse)
+        }
+        else{
+            res.send(failedResponse)
+        }
+    })
+
     app.post('/getCurrentUserTickets', async(req,res)=>{
         const body = req.body
 
         if(body){
             const ticketData = body
+            ticketData.userId = req.user.id
             const ticketResponse = await 
             interactors
             .getCurrentUserTicketsForProject(ticketData)
@@ -204,10 +230,64 @@ export default (app)=>{
         }
     })
 
+    app.post('/getTicketAttachments',async (req,res)=>{
+        const body = req.body
+
+        if(body){
+            const {ticketId} = body
+            const getResponse = await 
+            interactors
+            .getAttachementsOfTicket(ticketId)
+
+            res.send(getResponse)
+        }
+        else{
+            res.send(failedResponse)
+        }
+    }) 
     
+    app.get('/getTicketStats',async (req,res)=>{
+        const getResponse = await 
+        interactors
+        .getAllTicketStats()
+
+        res.send(getResponse)
+    }) 
 
     app.use(
         '/file',
         express.static(process.cwd() + '/fileStorage')
     )
+
+    app.get('/getAllUsers',async (req,res)=>{
+        const result = await
+        interactors
+        .getAllUsers()
+
+        res.send(result)
+    })
+
+    app.get('/getAllProjectsForUser',async (req,res)=>{
+        const getResponse = await 
+        interactors
+        .getAllProjectsForUser(req.user.id)
+
+        res.send(getResponse)
+    }) 
+
+    app.post('/getUsersForProject', async (req,res)=>{
+        const body = req.body
+
+        if(body){
+            const {projectId} = body
+            const getResponse = await 
+            interactors
+            .getUsersForProject(projectId)
+
+            res.send(getResponse)
+        }
+        else{
+            res.send(failedResponse)
+        }
+    })
 }

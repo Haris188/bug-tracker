@@ -26,10 +26,33 @@ export default class Project{
         = await this
         .saveProjectToDataStore(project)
 
-        return projectSaveResponse.success
+        const userSave 
+        = projectSaveResponse.success
         ? await this
         .saveProjectIdToUsers(projectId, users)
         : projectSaveResponse
+
+        return userSave.success
+        ? await this.getProjectWithId(projectId)
+        : userSave
+    }
+
+    private async getProjectWithId(projectId){
+        const refSetResponse = await this
+        .dataStore.setIfNotCreateRef('projects')
+
+        const projectFetch 
+        = refSetResponse.success
+        ? await this.dataStore
+        .readWhere({id:projectId})
+        : refSetResponse
+
+        if(projectFetch.success 
+            && projectFetch.data.length > 0){
+                projectFetch.data = projectFetch.data[0]
+        }
+
+        return projectFetch
     }
 
     private async saveProjectToDataStore(project){
@@ -44,6 +67,12 @@ export default class Project{
     private async saveProjectIdToUsers(projectId, userIds){
         let saveProjectIdsSuccess = true
 
+        const dataStore = new DataStoreGetter()
+        .getAccordingToEnv()
+
+        const setRefRes = await dataStore
+        .setIfNotCreateRef(`"project_${projectId}_users"`)
+
         userIds.forEach(async (userId)=>{
             const user = await this
             .getUserWith(userId)
@@ -52,9 +81,16 @@ export default class Project{
                 const saveResponse
                 =await user.addProjectWithId(projectId)
 
+                
+                const userToProjectRes = setRefRes.success
+                ? await dataStore
+                .write({userId: user.getData().data.accountData.id})
+                : setRefRes
+
                 saveProjectIdsSuccess
                 = saveProjectIdsSuccess
                 && saveResponse.success
+                && userToProjectRes.success
             }
         })
 
