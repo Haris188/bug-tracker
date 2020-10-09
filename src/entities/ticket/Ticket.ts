@@ -1,6 +1,7 @@
 import TicketData from "./TicketData";
 import DataStoreGetter from "../dataStoreAccess/DataStoreGetter";
 import FileStoreGetter from '../fileStoreAccess/FileStoreGetter'
+import UserFactory from "../user/UserFactory";
 
 export default class Ticket{
     private ticketData
@@ -93,10 +94,25 @@ export default class Ticket{
         const setRef = await dataStore
         .setIfNotCreateRef('comments')
 
-        return setRef.success
+        const getComments = 
+        setRef.success
         ? await dataStore
         .readWhere({ticketid: this.ticketData.id})
         : setRef
+
+        const commentsWithUsernames 
+        =getComments.data.map(async (comment)=>{
+            const user = await new UserFactory()
+            .retrieveWithUserId(comment.userid)
+
+            const userData = user.getData()
+
+            return {...comment, username: userData.data.accountData.name}
+        })
+
+        return getComments.success
+        ? {success:true, data: await Promise.all(commentsWithUsernames)}
+        : getComments
     }
 
     private async getTicketWithId(){

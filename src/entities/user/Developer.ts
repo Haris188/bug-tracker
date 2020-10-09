@@ -3,6 +3,7 @@ import User from './User'
 import Authenticator from '../authenticator/Authenticator'
 import DataStoreGetter from '../dataStoreAccess/DataStoreGetter'
 import UserData from './UserData'
+import TicketDataRetriever from '../ticket/TicketDataRetriever'
 
 class Developer implements User{
     private userData:any
@@ -46,7 +47,7 @@ class Developer implements User{
         const userId = this.userData.accountData.id
 
         const refResponse = await dataStore
-        .setIfNotCreateRef(`id_${userId}_projects`)
+        .setIfNotCreateRef(`"id_${userId}_projects"`)
 
         return refResponse.success
         ? await dataStore.write({
@@ -63,6 +64,18 @@ class Developer implements User{
         ? await this
         .getProjectsWithIds(projectIds.data)
         : projectIds
+    }
+
+    async getTicketsForProject(projectId){
+        const ticketRetriever 
+        = new TicketDataRetriever()
+
+        return await 
+        ticketRetriever
+        .getAllTicketsWhere({
+            userid: this.userData.accountData.id,
+            projectid: projectId
+        })
     }
 
     getRole(){

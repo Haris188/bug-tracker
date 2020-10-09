@@ -168,7 +168,10 @@ export default ()=>{
     // .then(value=>console.log(value))
 
     new Interactors()
-    .getCommentsForTicket("52b3c5c6-4ca0-4f28-a99d-2e4ca6b096be")
+    .getCurrentUserTicketsForProject({
+        userid: "67f0ee62-3e32-446d-9255-11530ba2f3bd",
+        projectid: "d9fc0e46-755f-456c-83f4-8cf9f0665c26"
+    })
     .then(value=>console.log(value))
 
 

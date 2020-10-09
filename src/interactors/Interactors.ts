@@ -140,9 +140,12 @@ class Interactors {
     }
 
     async getCurrentUserTicketsForProject(ticketData){
-        return await this
-        .ticketDataRetriever
-        .getAllTicketsWhere({projectid: ticketData.projectId})
+        const user = await this
+        .userFactory
+        .retrieveWithUserId(ticketData.userid)
+
+        return await 
+        user.getTicketsForProject(ticketData.projectid)
     }
 
     async getAllTicketsForProject(projectId){

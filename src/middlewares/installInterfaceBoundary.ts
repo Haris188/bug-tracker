@@ -154,6 +154,7 @@ export default (app)=>{
 
         if(body){
             const commentData = body
+            commentData.userId = req.user.id
             const commentResponse = await 
             interactors
             .addCommentToTicket(commentData)
@@ -185,8 +186,10 @@ export default (app)=>{
         const body = req.body
 
         if(body){
-            const ticketData = body
-            ticketData.userId = req.user.id
+            const ticketData = {
+                userid: req.user.id,
+                projectid: body.projectId
+            }
             const ticketResponse = await 
             interactors
             .getCurrentUserTicketsForProject(ticketData)
@@ -288,6 +291,16 @@ export default (app)=>{
         }
         else{
             res.send(failedResponse)
+        }
+    })
+
+    app.get('/logout', (req:any, res:any)=>{
+        if(req.user){
+            req.logout();
+            res.send({success:true, data:null});
+        }
+        else{
+            res.send({success:false,data:'you are not logged In'});
         }
     })
 }

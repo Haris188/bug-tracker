@@ -3,6 +3,7 @@ import User from './User'
 import Authenticator from '../authenticator/Authenticator'
 import DataStoreGetter from '../dataStoreAccess/DataStoreGetter'
 import UserData from './UserData'
+import TicketDataRetriever from '../ticket/TicketDataRetriever'
 
 class Admin implements User{
     private userData:any
@@ -60,6 +61,15 @@ class Admin implements User{
         ? await this
         .getProjectsWithIds(projectIds.data)
         : projectIds
+    }
+
+    async getTicketsForProject(projectId){
+        const ticketRetriever 
+        = new TicketDataRetriever()
+
+        return await 
+        ticketRetriever
+        .getAllTicketsWhere({projectid: projectId})
     }
 
     getRole(){

@@ -7,7 +7,8 @@ interface User {
     delete(): Promise<QueryResponse>
     addProjectWithId(projectId): Promise<QueryResponse>
     getData(): QueryResponse,
-    getAllProject(): Promise<QueryResponse>
+    getAllProject(): Promise<QueryResponse>,
+    getTicketsForProject(projectId): Promise<QueryResponse>
 }
 
 export default User
