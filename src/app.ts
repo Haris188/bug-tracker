@@ -7,6 +7,7 @@ dotenv.config()
 export default ()=>{
     const app = express()
     const port = process.env.PORT
+    app.set('trust proxy', true)
 
     middlewares.installParsers(app)
     middlewares.installSession(app)
