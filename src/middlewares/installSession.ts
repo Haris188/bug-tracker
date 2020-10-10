@@ -37,6 +37,7 @@ export default (app:any)=>{
         saveUninitialized: true,
         cookie:{
           maxAge: HOUR,
+          secure:true
         }
       })
     
