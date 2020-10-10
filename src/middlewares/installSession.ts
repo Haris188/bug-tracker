@@ -38,7 +38,7 @@ export default (app:any)=>{
         cookie:{
           maxAge: HOUR,
           secure:false,
-          sameSite: 'none'
+          sameSite: 'strict'
         }
       })
     
