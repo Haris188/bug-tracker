@@ -60,7 +60,8 @@ class Interactors {
         .retrieveWithUserId(id)
 
         return user
-        .getData()
+        ? user.getData()
+        : {success:false, data:null}
     }
 
     async removeUser(deletionData){

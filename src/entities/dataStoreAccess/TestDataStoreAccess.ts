@@ -10,25 +10,28 @@ import {
 
 class TestDataStoreAccess implements DataStoreAccess{
     private ref:any
-    private dataStore = {
+    private static dataStore = {
         accounts: [
             {
                 id: '1',
                 email: 'haris@gmail.com',
                 password: 'anypass',
-                role: 'developer'
+                role: 'developer',
+                name: 'haris'
             },
             {
                 id: '2',
                 email: 'ahmad@gmail.com',
                 password: 'anypass',
-                role: 'developer'
+                role: 'developer',
+                name: 'ahmad'
             },
             {
                 id: '5',
                 email: 'ahmad@gmail.com',
                 password: 'anypass',
-                role: 'admin'
+                role: 'admin',
+                name: 'ahmad'
             }
         ],
         developers: [
@@ -44,7 +47,7 @@ class TestDataStoreAccess implements DataStoreAccess{
                 priority: 'high',
                 userId: '1',
                 projectId: '2',
-                id: '5af5a79b-c3c4-40c9-ae42-16f9bf887435',
+                id: '1',
                 completed:false
             },
             {
@@ -59,7 +62,7 @@ class TestDataStoreAccess implements DataStoreAccess{
         ],
         comments:[
             {
-                ticketId: '4af5a79b-c3c4-40c9-ae42-16f9bf887435',
+                ticketId: '1',
                 comment: 'Getting this error while screen on as well',
                 userId: '1',
                 id: '698bfd31-f418-4a7f-81a6-e440d3ad8465'
@@ -69,14 +72,25 @@ class TestDataStoreAccess implements DataStoreAccess{
             { 
                 path: 'http://pathtofile.com/paht' 
             } 
+        ],
+        projects:[
+            {
+                id: '1',
+                name: 'A test project',
+                description: 'A test description'
+            }
+        ],
+        '"id_1_projects"':[
+            {
+                projectId: '1'
+            }
         ]
-
     }
 
     async write(data:any){
-        this.dataStore[this.ref]
+        TestDataStoreAccess.dataStore[this.ref]
         .push(data)
-        console.log(this.dataStore)
+        console.log(TestDataStoreAccess.dataStore)
         return {success:true,data:null}
     }
  
@@ -88,7 +102,7 @@ class TestDataStoreAccess implements DataStoreAccess{
     }
 
     async readWhere(argsObj:object){
-        const refRecords = this
+        const refRecords = TestDataStoreAccess
         .dataStore[this.ref]
 
         const foundRecord: Array<any> 
@@ -101,6 +115,11 @@ class TestDataStoreAccess implements DataStoreAccess{
     }
 
     async deleteWhere(argsObj){
+        remove(TestDataStoreAccess
+            .dataStore[this.ref],(i:any)=>(
+            isMatch(i,argsObj)
+        ))
+
         return {
             success:true,
             data:null
@@ -108,23 +127,23 @@ class TestDataStoreAccess implements DataStoreAccess{
     }
 
     async updateWhere(updateData, whereFields){
-        this.dataStore[this.ref]
+        TestDataStoreAccess.dataStore[this.ref]
         .forEach((ticket,index)=>{
             if(isMatch(ticket, whereFields)){
-                this.dataStore[this.ref][index]
+                TestDataStoreAccess.dataStore[this.ref][index]
                  = {
-                     ...this.dataStore[this.ref][index],
+                     ...TestDataStoreAccess.dataStore[this.ref][index],
                      ...updateData
                  }
             }
         })
 
-        console.log(this.dataStore)
+        console.log(TestDataStoreAccess.dataStore)
         return {success:true, data:null }
     }
 
     private findRef(path:string){
-        const ref = this.dataStore[path]
+        const ref = TestDataStoreAccess.dataStore[path]
         return ref
     }
 
@@ -134,7 +153,7 @@ class TestDataStoreAccess implements DataStoreAccess{
     }
 
     private createRef(path:string){
-        this.dataStore[path] = []
+        TestDataStoreAccess.dataStore[path] = []
         this.ref = path
         return {success:true,data:null}
     }

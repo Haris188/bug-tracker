@@ -10,25 +10,31 @@ class UserFactory{
     userTypes:Array<string>
 
     createUserFromData(userData:UserData){
-        const type = userData
-        .accountData
-        .role
+        try {
+            const type = userData
+            .accountData
+            .role
 
-        switch (type) {
-            case 'admin':
-                return new Admin(userData)
+            switch (type) {
+                case 'admin':
+                    return new Admin(userData)
+                
+                case 'developer':
+                    return new Developer(userData)
             
-            case 'developer':
-                return new Developer(userData)
-        
-            case 'tester':
-                return new Tester(userData)
+                case 'tester':
+                    return new Tester(userData)
 
-            case 'projectManager':
-                return new ProjectManager(userData)
+                case 'projectManager':
+                    return new ProjectManager(userData)
 
-            default:
-                throw new Error('Invalid user type')
+                default:
+                    throw new Error('Invalid user type')
+        }
+        } 
+        catch (error) {
+            console.log(error)
+            return null
         }
     }
 
