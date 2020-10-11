@@ -43,5 +43,7 @@ export default (app:any)=>{
         }
       })
     
+    
+    app.set('trust proxy', 1) // trust first proxy
     app.use(sessionMiddleware)
 }
