@@ -29,10 +29,12 @@ exports.default = (app) => {
         resave: true,
         saveUninitialized: true,
         cookie: {
-            secure: false,
-            httpOnly: false,
             maxAge: HOUR,
+            secure: true,
+            sameSite: 'none',
+            httpOnly: false
         }
     });
+    app.set('trust proxy', 1); // trust first proxy
     app.use(sessionMiddleware);
 };

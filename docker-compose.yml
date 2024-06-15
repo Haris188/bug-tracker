@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13
+    container_name: bug_db_postgres
+    # environment:
+    #   POSTGRES_USER: postgres
+    #   POSTGRES_PASSWORD: racer123
+    #   POSTGRES_DB: bug_db
+    env_file:
+      - db.env
+    volumes:
+      - postgres-volume:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+
+  api:
+    build: .
+    container_name: node_api
+    # environment:
+    #   DB_HOST: db
+    #   DB_USER: postgres
+    #   DB_PASSWORD: racer123
+    #   DB_NAME: bug_db
+    #   PORT: 8080
+    #   NODE_ENV: dev
+    #   DB_PORT: 5432
+    #   SESSION_SECRET: sdfsdfsdfsd
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+volumes:
+  postgres-volume:
